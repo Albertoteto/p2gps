@@ -1,0 +1,41 @@
+name: CI solamente 
+on: 
+  push: 
+    branches: [ master ] 
+  workflow_dispatch: 
+ 
+jobs: 
+  build: 
+    runs-on: ubuntu-latest 
+    permissions: 
+      contents: write 
+      packages: write 
+ 
+    steps: 
+      - name: Checkout repository 
+        uses: actions/checkout@v4 #descarga el repositorio en el ejecutor 
+ 
+      - name: Set up JDK 8 
+        uses: actions/setup-java@v4  
+        with: 
+            java-version: '8' 
+            distribution: 'adopt' 
+            server-id: github  
+            settings-path: ${{ github.workspace }} # location for the settings.xml file 
+           
+      #### BUILDS ###### 
+      - uses: gradle/actions/setup-gradle@v3 
+        with: 
+          gradle-version: 2.1  
+                
+      - name: build del Front 
+        working-directory: src/Clients 
+        run: ./gradlew build  
+      - uses: actions/upload-artifact@v4 #guardar en Artifacts de la Acción el resultado del build. No hace falta, es por curiosidad. 
+        with: 
+           name: Clients 
+           path: src/Clients/build/libs 
+     
+      - name: build del Back 
+        working-directory: src/Backend/OrderService 
+        run: ./gradlew build test
