@@ -1,6 +1,20 @@
 version: "3"
 
 services:
+  # Definimos el servicio de Frontend (Web)
+  web:
+    image: albertoteto/p2gps:web
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.25"
+          # memory: 300M  # Comentamos para evitar posibles restricciones.
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "80:8080"  # Exponemos el puerto 80 en el contenedor y lo mapeamos al 8080.
+
   # Definimos el servicio de MongoDB
   mongo:
     image: albertoteto/p2gps:db
@@ -9,7 +23,7 @@ services:
       resources:
         limits:
           cpus: "0.15"
-          memory: 200M
+          # memory: 200M  # Comentamos para evitar posibles restricciones.
       restart_policy:
         condition: on-failure  # Reiniciar el contenedor si falla.
     ports:
@@ -28,25 +42,11 @@ services:
       resources:
         limits:
           cpus: "0.3"
-          memory: 500M
+          # memory: 500M  # Comentamos para evitar posibles restricciones.
       restart_policy:
         condition: on-failure
     ports:
       - "8080:8080"  # Exponemos el puerto 8080 en el contenedor.
-
-  # Definimos el servicio de Frontend (Web)
-  web:
-    image: albertoteto/p2gps:web
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: "0.25"
-          memory: 300M
-      restart_policy:
-        condition: on-failure
-    ports:
-      - "80:8080"  # Exponemos el puerto 80 en el contenedor y lo mapeamos al 8080.
 
 # Definimos volúmenes persistentes
 volumes:
