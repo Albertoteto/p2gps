@@ -79,7 +79,6 @@ jobs:
         with:
           azcliversion: latest
           inlineScript: |
-           az webapp config appsettings set --name p2gps --resource-group
-             p2gps5177 --settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=TRUE
+           az webapp config appsettings set --name p2gps --resource-group p2gps5177 --settings WEBSITES_ENABLE_APP_SERVICE_STORAGE=TRUE
            az webapp start --name p2gps --resource-group p2gps5177
 
