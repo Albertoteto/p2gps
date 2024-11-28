@@ -43,7 +43,7 @@ jobs:
  #... 
       - name: dockerizar el front y el backend 
         run: |  
-            cp src/Clients/build/libs/*.war deploy/docker/Clients/drop #copiar el resultado del build para la nueva imagen 
+            cp src/Clients/build/libs/*.war deploy/docker/Clients/drop  
             docker build -t p2gps/web deploy/docker/Clients 
             cp src/Backend/OrderService/build/libs/ordering* deploy/docker/Order/drop 
             #copiar el resultado del build para la nueva imagen 
